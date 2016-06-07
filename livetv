@@ -1,0 +1,40 @@
+#!/bin/bash
+
+wget -q --spider http://google.com
+
+days="4"
+
+if [ $? -eq 0 ]; then
+
+## tv_grab_sd_json --days 2 --output /media/Dingo/television/television.xml
+
+rm /media/Dingo/television/Listings.xml
+rm /media/Dingo/television/Listings2.xml
+rm /media/Dingo/television/list-output.xml
+rm /media/Dingo/television/list-output2.xml
+rm /media/Dingo/television/television.xml
+
+tv_grab_na_dd --config-file ~/.xmltv/tv_grab_na_dd.conf --days $days --output /media/Dingo/television/Listings.xml
+tv_grab_na_dd --config-file ~/.xmltv/tv_grab_na_dd_2.conf --days $days --output /media/Dingo/television/Listings2.xml
+
+tv_sort --by-channel /media/Dingo/television/Listings.xml --output /media/Dingo/television/list-output.xml
+tv_sort --by-channel /media/Dingo/television/Listings2.xml --output /media/Dingo/television/list-output2.xml
+
+
+tv_merge -i /media/Dingo/television/list-output.xml -m /media/Dingo/television/list-output2.xml -o /media/Dingo/television/television.xml
+
+cp /media/Dingo/television/television.xml /media/Dingo/Videos/epg
+##OSMC
+scp /media/Dingo/television/television.xml osmc@192.168.1.133:~/television/
+##OSMC-CYRIS
+scp /media/Dingo/television/television.xml osmc@192.168.1.135:~/television/
+
+rm /media/Dingo/television/Listings.xml
+rm /media/Dingo/television/Listings2.xml
+rm /media/Dingo/television/list-output.xml
+rm /media/Dingo/television/list-output2.xml
+rm /media/Dingo/television/television.xml
+
+else
+    echo "Offline"
+fi

@@ -1,0 +1,6 @@
+0 1 * * * /home/osmc/scripts/kodi-update.sh UL #Update KODI movie/tv library
+15 1 * * * /home/osmc/scripts/tc.sh home #Update KODI texturecache
+55 2 * * * /usr/local/bin/livetv #Update OSMC TVGUIDE
+0 3 * * * /home/osmc/scripts/ftvguide-update.sh ftvguide #Update OSMC FTVGUIDE
+5 3 * * * /home/osmc/scripts/ftvguide-update.sh home #Return to Homescreen after FTVGUIDE UPDATE
+
